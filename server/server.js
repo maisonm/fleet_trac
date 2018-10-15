@@ -1,16 +1,10 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
-
-//Schemas
-// const User = require('./models/User');
-// const Customer = require('./models/Customer');
-
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
 require('dotenv').config({ path: __dirname + '/.env' });
+
+//API
+const users = require('./routes/api/users');
 
 //Mongoose connection
 const mongoose = require('mongoose');
@@ -19,6 +13,13 @@ mongoose.connect(mongoDB, {useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use('/users', users);
+
 
 // app.post('/user/register', (req, res, err) => {
 //     const { body } = req;
@@ -68,3 +69,15 @@ app.listen(port, (err) => {
 
     console.info(`****** Node server is running on ${port} ******`);
 });
+
+
+
+
+
+
+
+
+/*** Ending Notes ***/
+
+// added new mongoDb connection
+// set up index.js files in /models - /routes - /controllers
