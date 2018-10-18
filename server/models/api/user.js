@@ -52,6 +52,32 @@ const UserSchema = new mongoose.Schema({
             type: String,
             default: 'No specified DOT interval'
         },
+        fleet: [{
+            unitType: {
+                type: String,
+                default: 'No type selected',
+            },
+            unitNumber: {
+                type: String,
+                default: 'No unit number provided',
+            },
+            vinNumber: {
+                type: String,
+                default: 'No vin number provided'
+            },
+            makeModel: {
+                type: String,
+                default: 'No make/model specified',
+            },
+            dotDone: {
+                type: String,
+                default: 'N/A',
+            },
+            dotDue: {
+                type: String,
+                default: 'N/A'
+            }
+        }]
     }]
 });
 

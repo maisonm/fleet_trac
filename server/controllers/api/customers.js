@@ -27,3 +27,33 @@ exports.customer_add = (req, res) => {
     });
 };
 
+exports.customer_add_fleet = (req, res) => {
+    const { body, params } = req;
+    const { unitType, unitNumber, vinNumber,
+    makeModel, dotDone, dotDue } = body;
+    const { id } = params;
+    const { custid } = params;
+
+    const newFleet = 
+    {
+        unitType: unitType,
+        unitNumber: unitNumber,
+        vinNumber: vinNumber,
+        makeModel: makeModel,
+        dotDone: dotDone,
+        dotDue: dotDue,
+    }
+
+    User.update({ 'customer._id': custid }, 
+    { 
+        $push: {
+            'customer.$.fleet': newFleet,
+        }
+    }, (err, user) => {
+        if(err) { console.log(err) }
+        res.send({
+            success: 'Fleet added',
+        });
+    });
+ 
+};

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const app = express();
 const port = process.env.PORT || 3000;
+const morgan = require('morgan');
 require('dotenv').config({ path: __dirname + '/.env' });
 
 //API
@@ -19,7 +20,26 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(morgan('dev'));
+
 app.use('/users', users);
+
+//Error Handling
+app.use((req, res, next) => {
+    const error = new Error('Route is not found');
+    error.status = 404;
+    next(error);
+});
+
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.json({
+        error: {
+            message: error.message,
+        }
+    })
+});
+//
 
 app.listen(port, (err) => {
     if (err) {
