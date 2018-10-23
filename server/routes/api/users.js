@@ -4,12 +4,20 @@ const router = express.Router();
 const user_controller = require('../../controllers/api/users');
 const customer_controller = require('../../controllers/api/customers');
 
-router.get('/:id/account', user_controller.user_login);
+//GET
+router.post('/accounts/login', user_controller.user_login);
 
-router.post('/account', user_controller.user_signup);
+//POST
+router.post('/accounts', user_controller.user_signup);
+router.post('/customers/:userid', customer_controller.customer_add);
+router.post('/customers/:custid/fleet', customer_controller.customer_add_fleet);
 
-router.post('/:id/customer', customer_controller.customer_add);
+//PUT
 
-router.post('/:id/customer/:custid/fleet', customer_controller.customer_add_fleet);
+//DELETE
+router.delete('/customers/:custid', customer_controller.customer_remove);
+router.delete('/customers/:custid/fleet/:equipmentid', customer_controller.customer_remove_fleet);
+router.delete('/accounts/:userid', user_controller.user_remove);
+
 
 module.exports = router;

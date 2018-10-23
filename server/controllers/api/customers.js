@@ -4,7 +4,7 @@ exports.customer_add = (req, res) => {
     const { body, params } = req;
     const { name, email, phone, contact, street, 
     city, state, zipcode, dotInterval } = body;
-    const { id } = params;
+    const { userid } = params;
 
     const newCustomer =
     {
@@ -21,9 +21,23 @@ exports.customer_add = (req, res) => {
         dotInterval: dotInterval,
     };
 
-    User.findByIdAndUpdate(id, { $push: { customer: newCustomer } }, { new: true }, (err, user) => {
-        if(err) { res.sendStatus(404); }
-        res.send(user);
+    User.findByIdAndUpdate(userid, { $push: { customer: newCustomer } }, { new: true }, (err, user) => {
+        if (err)
+            throw err;
+        else
+            res.send(user);
+    });
+};
+
+exports.customer_remove = (req, res) => {
+    const { params } = req;
+    const { custid } = params;
+
+    User.updateMany({}, { $pull: { customer: { _id: custid } } }, (err) => {
+        if (err)
+            throw err;
+        else 
+            res.send({ sucess: 'Customer: ' + custid + ' | has been removed' })
     });
 };
 
@@ -31,10 +45,9 @@ exports.customer_add_fleet = (req, res) => {
     const { body, params } = req;
     const { unitType, unitNumber, vinNumber,
     makeModel, dotDone, dotDue } = body;
-    const { id } = params;
     const { custid } = params;
 
-    const newFleet = 
+    const newEquipment = 
     {
         unitType: unitType,
         unitNumber: unitNumber,
@@ -44,16 +57,24 @@ exports.customer_add_fleet = (req, res) => {
         dotDue: dotDue,
     }
 
-    User.update({ 'customer._id': custid }, 
-    { 
-        $push: {
-            'customer.$.fleet': newFleet,
-        }
-    }, (err, user) => {
-        if(err) { console.log(err) }
-        res.send({
-            success: 'Fleet added',
-        });
+    User.updateOne({ 'customer._id': custid }, { $push: { 'customer.$.fleet': newEquipment }}, (err) => {
+        if (err) 
+            throw err;
+        else
+            res.send({ success: 'Equipment successfully added' });
     });
  
+};
+
+
+exports.customer_remove_fleet = (req, res) => {
+    const { params } = req;
+    const { custid, equipmentid } = params;
+
+    User.updateOne({ 'customer._id': custid }, { $pull: { 'customer.$.fleet': { _id: equipmentid } } }, { new: true }, (err) => {
+        if (err)
+            throw err;
+        else 
+            res.send({ success: 'Eqiupment ' + equipmentid + ' | has been deleted'});
+    });
 };
