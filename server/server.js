@@ -32,18 +32,14 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-    res.status(error.status || 500);
-    res.json({
-        error: {
-            message: error.message,
-        }
-    })
+    if (err) 
+        throw error;
 });
 //
 
-app.listen(port, (err) => {
-    if (err) {
+app.listen(port, (err, req, res) => {
+    if (err)
         console.info('ERROR: Server failed to start!', + err);
-    }
-    console.info(`****** Node server is running on ${port} ******`);
+    else
+        console.info(`****** Node server is running on ${port} ******`);
 });

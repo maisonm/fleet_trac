@@ -13,6 +13,9 @@ router.post('/customers/:userid', customer_controller.customer_add);
 router.post('/customers/:custid/fleet', customer_controller.customer_add_fleet);
 
 //PUT
+router.put('/accounts/:userid', user_controller.user_update);
+router.put('/customers/:userid/:custid/', customer_controller.customer_update);
+router.put('/customers/:userid/:custid/fleet/:equipmentid', customer_controller.customer_update_fleet);
 
 //DELETE
 router.delete('/customers/:custid', customer_controller.customer_remove);
