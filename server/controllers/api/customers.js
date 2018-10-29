@@ -53,7 +53,7 @@ exports.customer_remove = (req, res) => {
 exports.customer_add_fleet = (req, res) => {
     const { body, params } = req;
     const { custid } = params;
-    const { newEquipment } = body;
+    const newEquipment = body;
 
     Customer.findByIdAndUpdate({ _id: custid }, { $push: { fleet: newEquipment }}, {new: true}, (err, customer) => {
         if (err) 
@@ -64,8 +64,6 @@ exports.customer_add_fleet = (req, res) => {
                 customer
             });
     });
-    
-    // console.log(typeof newEquipment);
 };
 
 exports.customer_update_fleet = (req, res) => {
