@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-    if (err) 
+    if (error) 
         throw error;
 });
 //

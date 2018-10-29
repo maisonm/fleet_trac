@@ -1,4 +1,5 @@
 const User = require('../../models/api/user');
+const Customer = require('../../models/api/Customer');
 const mongoose = require('mongoose');
 
 exports.customer_add = (req, res) => {
@@ -7,71 +8,71 @@ exports.customer_add = (req, res) => {
     city, state, zipcode, dotInterval } = body;
     const { userid } = params;
 
-    const newCustomer =
-    {
-        name: name,
-        contact: contact,
-        email: email,
-        phone: phone,
-        address: {
-            street: street,
-            city: city,
-            state: state,
-            zipcode: zipcode,
-        },
-        dotInterval: dotInterval,
+        User.findOne({ _id: userid }, (err, user) => {
+            if (err) {
+                throw err;
+            }
+            const customer = new Customer({
+                belongsTo: user._id,
+                name: name,
+                contact: contact,
+                email: email,
+                phone: phone,
+                address: {
+                    street: street,
+                    city: city,
+                    state: state,
+                    zipcode: zipcode,
+                },
+                dotInterval: dotInterval,
+            });
+                customer.save((err, customer) => {
+                    if (err)
+                        throw err;
+                    else 
+                        res.send({
+                            user,
+                            customer
+                        });
+                });
+        });
     };
-
-    User.findByIdAndUpdate(userid, { $push: { customer: newCustomer } }, { new: true }, (err, user) => {
-        if (err)
-            throw err;
-        else
-            res.send(user);
-    });
-};
 
 exports.customer_remove = (req, res) => {
     const { params } = req;
     const { custid } = params;
 
-    User.updateMany({}, { $pull: { customer: { _id: custid } } }, (err) => {
+    Customer.findByIdAndRemove({ _id: custid }, (err) => {
         if (err)
             throw err;
         else 
-            res.send({ sucess: 'Customer: ' + custid + ' | has been removed' })
+            res.send({ sucess: 'Customer: ' + custid + ' has been removed' });
     });
 };
 
 exports.customer_add_fleet = (req, res) => {
     const { body, params } = req;
-    const { unitType, unitNumber, vinNumber,
-    makeModel, dotDone, dotDue } = body;
     const { custid } = params;
+    const { newEquipment } = body;
 
-    const newEquipment = 
-    {
-        unitType: unitType,
-        unitNumber: unitNumber,
-        vinNumber: vinNumber,
-        makeModel: makeModel,
-        dotDone: dotDone,
-        dotDue: dotDue,
-    }
-
-    User.updateOne({ 'customer._id': custid }, { $push: { 'customer.$.fleet': newEquipment }}, (err) => {
+    Customer.findByIdAndUpdate({ _id: custid }, { $push: { fleet: newEquipment }}, {new: true}, (err, customer) => {
         if (err) 
             throw err;
         else
-            res.send({ success: 'Equipment successfully added' });
+            res.send({ 
+                success: 'Equipment successfully added',
+                customer
+            });
     });
- 
+    
+    // console.log(typeof newEquipment);
 };
 
 exports.customer_update_fleet = (req, res) => {
     const { body, params } = req;
     const { unitType, unitNumber, vinNumber,
     makeModel, dotDone, dotDue } = body;
-    const { userid, custid, equipmentid } = params;
+    const { equipmentid } = params;
 
     const updatedEquipment = 
     {
@@ -83,16 +84,11 @@ exports.customer_update_fleet = (req, res) => {
         dotDue: dotDue,
     }
 
-    User.updateOne({ 'customer.$.fleet': { _id: equipmentid } }, { $set: { 'customer.$.fleet': body }}, (err) => {
+    User.updateOne({ 'customer.$.fleet': equipmentid }, { $set: { 'customer.$.fleet': { updatedEquipment } } }, (err) => {
         if (err)
             throw err;
         else 
-            User.findOne({ _id: userid }, (err, user) => {
-                if (err)
-                    throw err;
-                else 
-                    res.send(user);
-            })
+            res.send('Success!!');
     });
 }
 
