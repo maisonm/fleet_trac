@@ -1,0 +1,7 @@
+To-do:
+
+* Break out User, Fleet and Customer controllers into seperate files (everything is stuffed into users.js!)
+
+* Break out Fleet and Customer routes into seperate files
+
+* Add Fleet and Customer routes to server.js via app.use()

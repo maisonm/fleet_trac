@@ -3,7 +3,7 @@ const Customer = require('../../models/api/Customer');
 const Fleet = require('../../models/api/Fleet');
 const mongoose = require('mongoose');
 
-//Add Customer with a user._id to reference who the customer belongs too
+//Create customer
 exports.customer_add = (req, res) => {
     const { body, params } = req;
     const { name, email, phone, contact, street, 
@@ -23,12 +23,10 @@ exports.customer_add = (req, res) => {
                 contact: contact,
                 email: email,
                 phone: phone,
-                address: {
-                    street: street,
-                    city: city,
-                    state: state,
-                    zipcode: zipcode,
-                },
+                street: street,
+                city: city,
+                state: state,
+                zipcode: zipcode,
                 dotInterval: dotInterval,
             });
                 customer.save((err, customer) => {
@@ -47,12 +45,52 @@ exports.customer_add = (req, res) => {
         });
     };
 
+
+//Get all Customers belonging to a User
+exports.customer_get = (req, res) => {
+    const { params } = req;
+    const { userid } = params;
+
+    Customer.find({ belongsToUser: userid }, (err, customers) => {
+        if (err)
+            res.send({
+                status: 404,
+                message: 'Customers not found!'
+            });
+        else    
+            res.send({
+                status: 200,
+                customers
+            });
+
+    });
+};
+
+//Update Customer
+exports.customer_update = (req, res) => {
+    const { params, body } = req;
+    const { custid } = params;
+
+    Customer.findOneAndUpdate({ _id: custid }, body, {new: true}, (err, customer) => {
+        if (err)
+            res.send({
+                status: 500,
+            });
+        else 
+            res.send({
+                status: 200,
+                customer,
+            });
+     });
+};
+
 //Remove Customer 
 exports.customer_remove = (req, res) => {
     const { params } = req;
     const { custid } = params;
 
     Customer.findByIdAndRemove({ _id: custid }, (err) => {
+
         if (err)
             res.send({
                 status: 500,
@@ -65,6 +103,10 @@ exports.customer_remove = (req, res) => {
             });
     });
 };
+
+
+// **** FLEEEEEEEET ****
+
 
 //Add fleet equipment under the Customer it belongs too
 exports.customer_add_fleet = (req, res) => {
@@ -116,57 +158,56 @@ exports.customer_update_fleet = (req, res) => {
     const { body, params } = req;
     const { unitType, unitNumber, vinNumber,
     make, model, dotDone, dotDue } = body;
-    const { custid, equipmentid } = params;
+    const { equipmentid } = params;
 
-    
-
+    Fleet.findOneAndUpdate({ _id: equipmentid }, body, {new: true}, (err, equipment) => {
+        if (err)
+            res.send({
+                status: 500,
+            });
+        else 
+            res.send({
+                status: 200,
+                equipment,
+            });
+    });
 }
 
 
 exports.customer_remove_fleet = (req, res) => {
     const { params } = req;
-    const { custid, equipmentid } = params;
+    const { equipmentid } = params;
 
-    User.updateOne({ 'customer._id': custid }, { $pull: { 'customer.$.fleet': { _id: equipmentid } } }, { new: true }, (err) => {
+    Fleet.deleteOne({ _id: equipmentid }, err => {
         if (err)
-            throw err;
-        else 
-            res.send({ success: 'Eqiupment ' + equipmentid + ' | has been deleted'});
-    });
+            res.send({
+                status: 500,
+                message: 'There was an error and the equipment could not be deleted!',
+            })
+        else    
+            res.send({
+                status: 200,
+                message: `${equipmentid} has been removed!`,
+            });
+    })
 };
 
 
-exports.customer_update = (req, res) => {
-    const { params, body } = req;
-    const { custid, userid } = params;
-    const { name, email, phone, contact, street, 
-        city, state, zipcode, dotInterval } = body;
-    
-        const updatedCustomer =
-        {
-            name: name,
-            contact: contact,
-            email: email,
-            phone: phone,
-            address: {
-                street: street,
-                city: city,
-                state: state,
-                zipcode: zipcode,
-            },
-            dotInterval: dotInterval,
-        };
+//Get all Customers belonging to a User
+exports.customer_get_fleet = (req, res) => {
+    const { params } = req;
+    const { custid } = params;
 
-
-    User.updateOne( { 'customer._id': custid }, { $set: { 'customer.$': updatedCustomer }}, (err) => {
+    Fleet.find({ belongsToCustomer: custid }, (err, fleets) => {
         if (err)
-            throw err;
+            res.send({
+                status: 404,
+                message: 'Fleet equipment not found!',
+            });
         else    
-            User.findOne({ _id: userid }, (err, user) => {
-                if (err)
-                    throw err;
-                else 
-                    res.send(user);
-            })
+            res.send({
+                status: 200,
+                fleets,
+            });
     });
 };

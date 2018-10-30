@@ -23,23 +23,21 @@ const CustomerSchema = new mongoose.Schema({
         type: String,
         default: 'No phone number found',
     },
-    address: {
-        street: {
-            type: String,
-            default: 'No street found',
-        },
-        city: {
-            type: String,
-            default: 'No city found',
-        },
-        state: {
-            type: String,
-            default: 'No state found',
-        },
-        zipcode: {
-            type: String,
-            default: 'No zipcode found',
-        }
+    street: {
+        type: String,
+        default: 'No street found',
+    },
+    city: {
+        type: String,
+        default: 'No city found',
+    },
+    state: {
+        type: String,
+        default: 'No state found',
+    },
+    zipcode: {
+        type: String,
+        default: 'No zipcode found',
     },
     dotInterval: {
         type: String,
