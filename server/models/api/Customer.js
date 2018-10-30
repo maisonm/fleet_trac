@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const Fleet = require('./Fleet');
+const User = require('./user');
 
 const CustomerSchema = new mongoose.Schema({
-    belongsTo: {
-        type: String,
-        default: '',
+    belongsToUser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
     },
     name: {
         type: String,
@@ -44,12 +45,6 @@ const CustomerSchema = new mongoose.Schema({
         type: String,
         default: 'No specified DOT interval',
     },
-    fleet: [ 
-        { 
-            type: mongoose.Schema.Types.Object,
-            ref: 'Fleet',
-        } 
-    ],
 });
 
 module.exports = mongoose.model('Customer', CustomerSchema);

@@ -15,7 +15,7 @@ router.post('/customers/:custid/fleet', customer_controller.customer_add_fleet);
 //PUT
 router.put('/accounts/:userid', user_controller.user_update);
 router.put('/customers/:userid/:custid/', customer_controller.customer_update);
-router.put('/customers/fleet/:equipmentid', customer_controller.customer_update_fleet);
+router.put('/customers/:custid/fleet/:equipmentid', customer_controller.customer_update_fleet);
 
 //DELETE
 router.delete('/customers/:custid', customer_controller.customer_remove);
@@ -24,3 +24,6 @@ router.delete('/accounts/:userid', user_controller.user_remove);
 
 
 module.exports = router;
+
+
+/// CUSTOMER FLEET UPDATE ROUTE BEING USED FOR TESTING!!!
