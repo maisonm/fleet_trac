@@ -6,7 +6,16 @@ const FleetSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer',
     },
+
     unitType: {
+        type: String,
+        default: 'N/A',
+    },
+    unitNumber: {
+        type: String,
+        default: 'N/A',
+    },
+    vinNumber: {
         type: String,
         default: 'N/A',
     },
@@ -21,6 +30,14 @@ const FleetSchema = new mongoose.Schema({
     year: {
         type: String,
         deault: 'N/A'
+    },
+    dotDone: {
+        type: String,
+        default: 'N/A',
+    },
+    dotDue: {
+        type: String,
+        default: 'N/A',
     }
 }) 
 

@@ -9,6 +9,8 @@ exports.fleet_add = (req, res) => {
     const { unitType, unitNumber, vinNumber, year, make, model,
     dotDone, dotDue } = body;
 
+    console.log(body);
+
     Customer.findOne({ _id: custid }, (err, customer) => {
         const { _id } = customer;
 
@@ -42,7 +44,7 @@ exports.fleet_add = (req, res) => {
             else 
                 res.send({
                     status: 200,
-                    message: `The ${unitType} was saved to the customers fleet.`
+                    equipment
                 });
         });
     });

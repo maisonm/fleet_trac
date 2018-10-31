@@ -8,8 +8,8 @@ exports.user_login = (req, res) => {
 	User.find({ username: username }, (err, users) => {
 		if (err)
 			res.send({
-				status: 500,
-				message: 'There was an issue accessing the server.'
+				status: 404,
+				message: 'There was an issue finding the user.'
 			})
 		else if (users.length != 1)
 			return res.send({
@@ -40,8 +40,8 @@ exports.user_signup = (req, res) => {
 	User.find({ username: username }, (err, previousUsers) => {
 		if (err) {
 			return res.send({
-				status: 500,
-				message: 'There was an issue accessing the server.',
+				status: 400,
+				message: 'There was an issue signing up.',
 			});
 		} else if (previousUsers.length > 0) {
 			return res.send({
@@ -59,7 +59,7 @@ exports.user_signup = (req, res) => {
 		newUser.save((err, user) => {
 			if (err)
 				res.send({
-					status: 500,
+					status: 400,
 					message: 'There was an issue saving the user. Nothing has been saved.',
 				});
 			else
@@ -78,7 +78,7 @@ exports.user_update = (req, res) => {
 	User.findByIdAndUpdate({ _id: userid }, body, {new: true}, (err, user) => {
 		if (err)
 			res.send({
-				status: 500,
+				status: 404,
 				message: 'There was an issue finding and updating the user on the server.',
 			});
 		else
@@ -97,7 +97,7 @@ exports.user_remove = (req, res) => {
 	User.deleteOne({ _id: userid }, (err) => {
 		if (err)
 			res.send({
-				status: 500,
+				status: 404,
 				message: 'There was an issue finding and removing the user.',
 			})
         else

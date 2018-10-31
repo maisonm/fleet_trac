@@ -13,8 +13,8 @@ exports.customer_add = (req, res) => {
         User.findOne({ _id: userid }, (err, user) => {
             if (err) {
                 res.send({
-                    status: 500,
-                    message: 'Can not find the user with the provided user id!'
+                    status: 404,
+                    message: 'There was an issue finding the user on the server.'
                 });
             }
             const customer = new Customer({
@@ -30,16 +30,15 @@ exports.customer_add = (req, res) => {
                 dotInterval: dotInterval,
             });
                 customer.save((err, customer) => {
-                    const { name } = customer;
                     if (err)
                     res.send({
-                        status: 500,
-                        message: 'There was an issue saving the customer. A customer was not saved.'
+                        status: 400,
+                        message: 'There was an issue saving the customer to the database.'
                     });
                     else 
                     res.send({
                         status: 200,
-                        message: `${name} has been saved!`
+                        customer
                     });
                 });
         });
@@ -74,7 +73,8 @@ exports.customer_update = (req, res) => {
     Customer.findOneAndUpdate({ _id: custid }, body, {new: true}, (err, customer) => {
         if (err)
             res.send({
-                status: 500,
+                status: 404,
+                message: 'There was an issue finding the customer.'
             });
         else 
             res.send({
@@ -93,8 +93,8 @@ exports.customer_remove = (req, res) => {
 
         if (err)
             res.send({
-                status: 500,
-                message: 'There was an issue finding the customer. A customer has been removed.'
+                status: 404,
+                message: 'There was an issue finding and removing the customer.'
             });
         else 
             res.send({ 
