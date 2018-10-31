@@ -7,6 +7,8 @@ require('dotenv').config({ path: __dirname + '/.env' });
 
 //API
 const users = require('./routes/api/users');
+const customers = require('./routes/api/customers');
+const fleets = require('./routes/api/fleets');
 
 //Mongoose connection
 const mongoose = require('mongoose');
@@ -22,7 +24,10 @@ app.use(express.json());
 
 app.use(morgan('dev'));
 
+//API routes
 app.use('/users', users);
+app.use('/customers', customers);
+app.use('/fleets', fleets);
 
 //Error Handling
 app.use((req, res, next) => {

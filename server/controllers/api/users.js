@@ -5,58 +5,68 @@ exports.user_login = (req, res) => {
 	const { username } = body;
 	const { password } = body;
 
-	User.find({
-		username: username
-	}, (err, users) => {
+	User.find({ username: username }, (err, users) => {
 		if (err)
-			throw err
+			res.send({
+				status: 500,
+				message: 'There was an issue accessing the server.'
+			})
 		else if (users.length != 1)
 			return res.send({
-				Error: 'Invalid username!'
+				status: 403,
+				message: 'Invalid username!'
 			});
 
 		const user = users[0];
 
 		if (user.password != password)
 			return res.send({
-				Error: 'Invalid password!'
+				status: 403,
+				message: 'Invalid password!',
 			});
 		else
-			res.send(user);
+			res.send({
+				status: 200,
+				user,
+			});
 	});
 
 };
 
 exports.user_signup = (req, res) => {
 	const { body } = req;
-	const { username } = body;
-	const { password } = body;
+	const { username, password, email } = body;
 
-	User.find({
-		username: username
-	}, (err, previousUsers) => {
-
+	User.find({ username: username }, (err, previousUsers) => {
 		if (err) {
 			return res.send({
-				success: false,
-				message: 'Error: Server error'
+				status: 500,
+				message: 'There was an issue accessing the server.',
 			});
 		} else if (previousUsers.length > 0) {
 			return res.send({
-				success: false,
-				message: 'Error: This username is taken'
+				status: 400,
+				message: 'This username is taken. Choose another username',
 			});
 		}
 
-		const newUser = new User();
+		const newUser = new User({
+			username: username,
+			password: password,
+			email: email,
+		});
 
-		newUser.username = username;
-		newUser.password = password;
 		newUser.save((err, user) => {
 			if (err)
-				throw err;
+				res.send({
+					status: 500,
+					message: 'There was an issue saving the user. Nothing has been saved.',
+				});
 			else
-				res.send(user);
+				res.send({
+					status: 200,
+					user,
+				});
 		});
 	});
 };
@@ -65,19 +75,16 @@ exports.user_update = (req, res) => {
 	const { params, body } = req;
 	const { userid } = params;
 
-	User.findByIdAndUpdate({
-		_id: userid
-	}, body, (err) => {
+	User.findByIdAndUpdate({ _id: userid }, body, {new: true}, (err, user) => {
 		if (err)
-			throw err;
+			res.send({
+				status: 500,
+				message: 'There was an issue finding and updating the user on the server.',
+			});
 		else
-			User.findOne({
-				_id: userid
-			}, (err, user) => {
-				if (err)
-					throw err;
-				else
-					res.send(user);
+			res.send({
+				status: 200,
+				user,
 			});
 	});
 };
@@ -87,19 +94,17 @@ exports.user_remove = (req, res) => {
 	const { params } = req;
 	const { userid } = params;
 
-	User.deleteOne({
-		_id: userid
-	}, (err) => {
+	User.deleteOne({ _id: userid }, (err) => {
 		if (err)
-			throw err;
+			res.send({
+				status: 500,
+				message: 'There was an issue finding and removing the user.',
+			})
         else
-            User.findOne({ _id: userid }, (err, user) => {
-                if (err)
-                    throw err;
-                else 
-                    res.send(user);
-            })
-
+			res.send({
+				status: 200,
+				message: `User ${userid} has been removed from the database!`,
+			})
 	});
 
 };
