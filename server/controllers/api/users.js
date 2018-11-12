@@ -10,7 +10,7 @@ exports.user_login = (req, res) => {
   const { username } = body;
   const { password } = body;
 
-  User.find({ username: username }, (err, users) => {
+  User.find({ username: username }, (err, user) => {
     if (err)
       res.send({
         status: 404,
@@ -21,8 +21,6 @@ exports.user_login = (req, res) => {
         status: 403,
         message: "Invalid username!"
       });
-
-    const user = users[0];
 
     bcrypt
       .compare(password, user.password)
