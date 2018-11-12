@@ -42,7 +42,7 @@ app.use((error, req, res, next) => {
 });
 //
 
-app.listen(port, (err, req, res) => {
+app.listen(port, (err) => {
     if (err)
         console.info('ERROR: Server failed to start!', + err);
     else
