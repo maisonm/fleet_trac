@@ -3,10 +3,9 @@ import React, { Component } from "react";
 //Assets
 import Logo from "./assets/logo.svg";
 //Components
-import SignUp from "../../components/SignUp/SignUp";
-import SignIn from "../../components/SignIn/SignIn";
+import UserForm from "../../components/UserForm/UserForm";
 //Styles
-import { HomePage, FormContainer, SiteLogo, ActionLink } from "./styles";
+import { HomePage, SiteLogo, ActionLink } from "./styles";
 
 export default class Home extends Component {
   constructor(props) {
@@ -33,7 +32,8 @@ export default class Home extends Component {
     return (
       <HomePage>
         <SiteLogo src={Logo} />
-        {this.state.signIn ? <SignIn /> : <SignUp />}
+
+        <UserForm signIn={this.state.signIn} />
 
         {this.state.signIn ? (
           <ActionLink onClick={this.toggleForm}>
