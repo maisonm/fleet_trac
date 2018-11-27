@@ -1,9 +1,10 @@
 import styled, { keyframes } from "styled-components";
-import { bounceInUp } from "react-animations";
+import { bounceInUp, fadeIn } from "react-animations";
 
 const Bounce = keyframes`${bounceInUp}`;
+const Fade = keyframes`${fadeIn}`;
 
-export const ComponentContainer = styled.div`
+export const ComponentContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,6 +64,7 @@ export const ForgotPassword = styled.a`
   font-size: 0.55em;
   color: #020202;
   cursor: pointer;
+  animation: 0.8s ease-in ${Fade};
 
   &&:hover {
     color: #3a99d9;

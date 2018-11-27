@@ -47,7 +47,7 @@ export const ActionButton = styled.button`
   }
 `;
 
-export const ComponentContainer = styled.div`
+export const ComponentContainer = styled.form`
   width: 100%;
   height: 100%;
   display: flex;

@@ -7,16 +7,15 @@ const saltRounds = 10;
 
 exports.user_login = (req, res) => {
   const { body } = req;
-  const { username } = body;
-  const { password } = body;
+  const { email, password } = body;
 
-  User.find({ username: username }, (err, user) => {
+  User.find({ email: email }, (err, user) => {
     if (err)
       res.send({
         status: 404,
         message: "There was an issue finding the user."
       });
-    else if (users.length != 1)
+    else if (user.length != 1)
       return res.send({
         status: 403,
         message: "Invalid username!"
@@ -47,9 +46,11 @@ exports.user_login = (req, res) => {
 
 exports.user_signup = (req, res) => {
   const { body } = req;
-  const { username, password, email } = body;
+  const { companyName, password, email } = body;
 
-  User.find({ username: username }, (err, previousUsers) => {
+  console.log(body);
+
+  User.find({ email: email }, (err, previousUsers) => {
     if (err) {
       return res.send({
         status: 400,
@@ -58,7 +59,7 @@ exports.user_signup = (req, res) => {
     } else if (previousUsers.length > 0) {
       return res.send({
         status: 400,
-        message: "This username is taken. Choose another username"
+        message: "Records show this email is linked to another account."
       });
     }
 
@@ -66,11 +67,10 @@ exports.user_signup = (req, res) => {
       .hash(password, saltRounds)
       .then(hash => {
         const newUser = new User({
-          username: username,
+          companyName: companyName,
           password: hash,
           email: email
         });
-        console.log(`${hash}`);
         newUser.save((err, user) => {
           if (err)
             res.send({

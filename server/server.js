@@ -10,6 +10,11 @@ const users = require("./routes/api/users");
 const customers = require("./routes/api/customers");
 const fleets = require("./routes/api/fleets");
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(morgan("dev"));
+
 //Mongoose connection
 const mongoose = require("mongoose");
 const mongoDB = process.env.MONGODB_URI || process.env.MLAB_URL;
@@ -20,11 +25,6 @@ mongoose.connect(
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-app.use(morgan("dev"));
 
 //API routes
 app.use("/users", users);

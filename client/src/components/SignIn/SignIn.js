@@ -10,15 +10,15 @@ import {
   ForgotPassword
 } from "./styles";
 
-const SignIn = props => (
-  <ComponentContainer>
+const SignIn = () => (
+  <ComponentContainer method="POST" action="/users/accounts/login">
     <Input>
       <InputLabel for="email">Email:</InputLabel>
-      <InputField id="email" value="Enter email" />
+      <InputField type="text" id="email" placeholder="Your email" />
     </Input>
     <Input>
       <InputLabel for="password">Password:</InputLabel>
-      <InputField id="password" value="Create password" />
+      <InputField type="text" id="password" placeholder="Your password" />
     </Input>
     <ActionButton>Sign In</ActionButton>
     <ForgotPassword> Forgot Password? </ForgotPassword>
