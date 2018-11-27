@@ -10,19 +10,24 @@ export const Container = styled.div`
   background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
 `;
 
-export const InfoHeader = styled.h3`
+export const InfoHeader = styled.h2`
   color: #595959;
   width: 50%;
   text-align: center;
   margin-top: 50px;
-  letter-spacing: 0.1px;
+  letter-spacing: 0.3px;
+
+  && span {
+    color: #0072ff;
+  }
 `;
 
 export const Info = styled.p`
-  width: 40%;
+  width: 45%;
   text-align: center;
-  font-size: 0.85em;
+  font-size: 0.8em;
   font-weight: 600;
   color: #797979;
-  margin-top: -10px;
+  margin-top: -5px;
+  line-height: 18px;
 `;

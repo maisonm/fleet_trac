@@ -17,13 +17,14 @@ const Test = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background-image: linear-gradient(to top, #f2f2f2 0%, white 100%);
 `;
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      signIn: false
+      signIn: true
     };
     this.toggleForm = this.toggleForm.bind(this);
   }

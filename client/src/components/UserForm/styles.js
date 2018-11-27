@@ -28,7 +28,7 @@ export const PanelGreeting = styled.div`
   background-color: #ffffff;
   box-shadow: 2px 0px 2px #c2c2c2;
   transition: 0.3s;
-  background-image: linear-gradient(to top, #00c6ff 0%, #0072ff 100%);
+  background-image: linear-gradient(to top, #4ecdc4 0%, #637283 100%);
   color: #fafafa;
   border-radius: 3px;
   animation: 0.6s ease-in ${Bounce};

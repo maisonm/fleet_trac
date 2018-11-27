@@ -41,7 +41,7 @@ export const Input = styled.div`
 
 export const ActionButton = styled.button`
   height: 40px;
-  background-color: #0072ff;
+  background-color: #556270;
   border-radius: 3px;
   width: 90%;
   border: none;
@@ -52,7 +52,7 @@ export const ActionButton = styled.button`
   font-weight: bold;
 
   &&:hover {
-    background-color: #338fff;
+    background-color: #637283;
     transition: 0.2s;
   }
 `;
