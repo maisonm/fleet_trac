@@ -8,10 +8,12 @@ export const InputField = styled.input`
   width: 100%;
   height: 40px;
   border-radius: 3px;
-  border: solid 1px #c0c0c0;
+  border: solid 1.5px ${props => props.isValid};
   padding-left: 10px;
   color: #595959;
   box-sizing: border-box;
+  transition: 0.5s;
+  outline: none;
 `;
 export const InputLabel = styled.label`
   font-size: 0.7em;

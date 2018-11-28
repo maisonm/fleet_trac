@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled, { keyframes } from "styled-components";
+import { withRouter } from "react-router-dom";
 
 //Styles
 import {
@@ -10,21 +10,18 @@ import {
   ActionButton
 } from "./styles";
 
-const validate = (email, password, companyName) => {
+const emailValidator = require("email-validator");
+
+const validateInput = (email, companyName, password, repeatPassword) => {
   return {
-    email: email.length === 0,
-    password: password.length === 6,
-    companyName: companyName.length === 2
+    email: emailValidator.validate(`${email}`),
+    companyName: companyName.length >= 2,
+    password: password.length >= 6,
+    repeatPassword: repeatPassword.length >= 6 // ** DOES NOT COMPARE PASSWORDS || NEED TO FIX! **
   };
 };
 
-const recheckPassword = (password, repeatPassword) => {
-  return {
-    password: password === repeatPassword
-  };
-};
-
-export default class SignUp extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
 
@@ -32,8 +29,7 @@ export default class SignUp extends Component {
       email: "",
       companyName: "",
       password: "",
-      repeatPassword: "",
-      resp: ""
+      repeatPassword: ""
     };
   }
 
@@ -53,18 +49,10 @@ export default class SignUp extends Component {
     this.setState({ repeatPassword: evt.target.value });
   };
 
-  canBeSubmitted() {
-    const { email, companyName, password, repeatPassword } = this.state;
-
-    const inputValidate = validate(email, password, companyName);
-
-    console.log(inputValidate);
-  }
-
   handleSubmit = evt => {
     evt.preventDefault();
 
-    let data = {
+    let userData = {
       companyName: this.state.companyName,
       password: this.state.password,
       email: this.state.email
@@ -76,11 +64,23 @@ export default class SignUp extends Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(data)
-    }).then(response => console.log(response));
+      body: JSON.stringify(userData)
+    }).then(res => {
+      const { status } = res;
+      if (status === 200) {
+        this.props.history.push("/Test");
+      }
+    });
   };
 
   render() {
+    const { email, companyName, password, repeatPassword } = this.state;
+    const inputIsValid = validateInput(
+      email,
+      companyName,
+      password,
+      repeatPassword
+    );
     return (
       <ComponentContainer onSubmit={this.handleSubmit}>
         <Input>
@@ -88,10 +88,12 @@ export default class SignUp extends Component {
           <InputField
             id="email"
             name="email"
-            type="text"
+            type="email"
             value={this.state.email}
             placeholder="Enter email"
             onChange={this.handleEmailChange}
+            required
+            isValid={inputIsValid.email ? "#B0BD27" : "#d9d9d9"}
           />
         </Input>
         <Input>
@@ -105,6 +107,8 @@ export default class SignUp extends Component {
             value={this.state.companyName}
             placeholder="Enter company name"
             onChange={this.handleNameChange}
+            required
+            isValid={inputIsValid.companyName ? "#B0BD27" : "#D5D6D9"}
           />
         </Input>
         <Input>
@@ -114,10 +118,12 @@ export default class SignUp extends Component {
           <InputField
             id="password"
             name="password"
-            type="text"
+            type="password"
             value={this.state.password}
             placeholder="Create password"
             onChange={this.handlePasswordChange}
+            required
+            isValid={inputIsValid.password ? "#B0BD27" : "#D5D6D9"}
           />
         </Input>
         <Input>
@@ -125,10 +131,12 @@ export default class SignUp extends Component {
           <InputField
             id="re-enter-password"
             name="repeatPassword"
-            type="text"
+            type="password"
             value={this.state.repeatPassword}
             placeholder="Re-enter password"
             onChange={this.handleRepeatPasswordChange}
+            required
+            isValid={inputIsValid.repeatPassword ? "#B0BD27" : "#D5D6D9"}
           />
         </Input>
         <ActionButton type="submit">Sign Up</ActionButton>
@@ -136,3 +144,5 @@ export default class SignUp extends Component {
     );
   }
 }
+
+export default withRouter(SignUp);

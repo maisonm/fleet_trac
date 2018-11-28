@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
@@ -7,9 +8,11 @@ import * as serviceWorker from "./serviceWorker";
 import Home from "./layouts/Homepage/Home";
 
 ReactDOM.render(
-  <App>
-    <Home />
-  </App>,
+  <Router>
+    <App>
+      <Route exact path="/" component={Home} />
+    </App>
+  </Router>,
 
   document.getElementById("root")
 );
