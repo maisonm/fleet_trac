@@ -11,33 +11,25 @@ exports.user_login = (req, res) => {
 
   User.find({ email: email }, (err, user) => {
     if (err)
-      res.send({
-        status: 404,
+      res.status(404).send({
         message: "There was an issue finding the user."
       });
     else if (user.length != 1)
-      return res.send({
-        status: 403,
-        message: "Invalid username!"
+      res.status(401).send({
+        message: "Incorrect email or password provided."
       });
 
     bcrypt
       .compare(password, user.password)
       .then(response => {
-        if (response)
-          res.send({
-            status: 200,
-            user
-          });
+        if (response) res.send(user);
         else
-          res.send({
-            status: 403,
-            message: "Invalid password!"
+          res.status(401).send({
+            message: "Incorrect email or password provided."
           });
       })
       .catch(err => {
-        res.send({
-          status: 500,
+        res.status(500).send({
           message: "There was an issue validating the password on the server."
         });
       });
@@ -48,17 +40,15 @@ exports.user_signup = (req, res) => {
   const { body } = req;
   const { companyName, password, email } = body;
 
-  console.log(body);
-
   User.find({ email: email }, (err, previousUsers) => {
     if (err) {
-      return res.send({
+      return res.status(400).send({
         status: 400,
         message: "There was an issue signing up."
       });
     } else if (previousUsers.length > 0) {
-      return res.send({
-        status: 400,
+      return res.status(403).send({
+        status: 403,
         message: "Records show this email is linked to another account."
       });
     }
@@ -73,20 +63,20 @@ exports.user_signup = (req, res) => {
         });
         newUser.save((err, user) => {
           if (err)
-            res.send({
+            return res.status(400).send({
               status: 400,
               message:
                 "There was an issue saving the user. Nothing has been saved."
             });
           else
-            res.send({
-              status: 200,
+            return res.status(201).send({
+              status: 201,
               user
             });
         });
       })
       .catch(err => {
-        res.send({
+        return res.status(500).send({
           status: 500,
           message: "There was an error encrypting the password!"
         });
@@ -100,14 +90,14 @@ exports.user_update = (req, res) => {
 
   User.findByIdAndUpdate({ _id: userid }, body, { new: true }, (err, user) => {
     if (err)
-      res.send({
+      res.status(404).send({
         status: 404,
         message:
           "There was an issue finding and updating the user on the server."
       });
     else
-      res.send({
-        status: 200,
+      res.status(201).send({
+        status: 201,
         user
       });
   });
@@ -120,12 +110,12 @@ exports.user_remove = (req, res) => {
 
   User.deleteOne({ _id: userid }, err => {
     if (err)
-      res.send({
+      res.status(404).send({
         status: 404,
         message: "There was an issue finding and removing the user."
       });
     else
-      res.send({
+      res.status(200).send({
         status: 200,
         message: `User ${userid} has been removed from the database!`
       });

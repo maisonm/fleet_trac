@@ -11,16 +11,23 @@ export const InputField = styled.input`
   border: solid 1.5px ${props => props.isValid};
   padding-left: 10px;
   color: #595959;
+  font-weight: 600;
   box-sizing: border-box;
   transition: 0.5s;
   outline: none;
+  background: #ffffff;
+
+  ::placeholder {
+    font-style: italic;
+    color: #797979;
+    font-size: 0.82em;
+  }
 `;
 export const InputLabel = styled.label`
-  font-size: 0.7em;
-  font-weight: 600;
+  font-size: 0.75em;
   color: #595959;
-  margin-bottom: 4px;
-  letter-spacing: 0.1px;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
 `;
 
 export const Input = styled.div`
@@ -57,4 +64,5 @@ export const ComponentContainer = styled.form`
   justify-content: center;
   align-items: center;
   animation: 0.6s ease-in ${Bounce};
+  position: relative;
 `;

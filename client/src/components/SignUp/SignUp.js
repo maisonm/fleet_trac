@@ -10,6 +10,9 @@ import {
   ActionButton
 } from "./styles";
 
+//Components
+import InputWarning from "../InputWarning/InputWarning";
+
 const emailValidator = require("email-validator");
 
 const validateInput = (email, companyName, password, repeatPassword) => {
@@ -17,7 +20,7 @@ const validateInput = (email, companyName, password, repeatPassword) => {
     email: emailValidator.validate(`${email}`),
     companyName: companyName.length >= 2,
     password: password.length >= 6,
-    repeatPassword: repeatPassword.length >= 6 // ** DOES NOT COMPARE PASSWORDS || NEED TO FIX! **
+    repeatPassword: repeatPassword.length >= 6 && repeatPassword === password
   };
 };
 
@@ -29,7 +32,9 @@ class SignUp extends Component {
       email: "",
       companyName: "",
       password: "",
-      repeatPassword: ""
+      repeatPassword: "",
+      invalidSubmitPopupOpen: false,
+      serverError: {}
     };
   }
 
@@ -49,85 +54,117 @@ class SignUp extends Component {
     this.setState({ repeatPassword: evt.target.value });
   };
 
+  closeWarningPopup = () => {
+    this.setState({ invalidSubmitPopupOpen: false });
+  };
+
+  // Add pop up error when trying to submit form with invalid fields
   handleSubmit = evt => {
     evt.preventDefault();
+    const { email, companyName, password, repeatPassword } = this.state;
 
     let userData = {
-      companyName: this.state.companyName,
-      password: this.state.password,
-      email: this.state.email
+      companyName: companyName,
+      password: password,
+      email: email
     };
 
-    fetch("http://localhost:3000/users/accounts/", {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(userData)
-    }).then(res => {
-      const { status } = res;
-      if (status === 200) {
-        this.props.history.push("/Test");
-      }
-    });
+    //Validate input values
+    const isValid = validateInput(email, companyName, password, repeatPassword);
+
+    //Invalid form input fields change state to open warning popup, else POST request is made
+    if (
+      !isValid.email ||
+      !isValid.companyName ||
+      !isValid.password ||
+      !isValid.repeatPassword
+    ) {
+      this.setState({ invalidSubmitPopupOpen: true });
+      return;
+    } else {
+      fetch("http://localhost:3000/users/accounts/", {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userData)
+      })
+        .then(response => response.json())
+        .then(response => {
+          const { status, message } = response;
+
+          if (status === 201) {
+            this.props.history.push("/dashboard");
+          } else {
+            let errorMessage = {
+              status,
+              message
+            };
+
+            this.setState({ serverErrorWarning: errorMessage });
+          }
+        });
+    }
   };
 
   render() {
     const { email, companyName, password, repeatPassword } = this.state;
+    //Validate input fields everytime state updates
     const inputIsValid = validateInput(
       email,
       companyName,
       password,
       repeatPassword
     );
+    let props = {
+      closePopup: this.closeWarningPopup,
+      serverError: this.state.serverError
+    };
     return (
       <ComponentContainer onSubmit={this.handleSubmit}>
+        {this.state.invalidSubmitPopupOpen ? <InputWarning {...props} /> : null}
         <Input>
-          <InputLabel for="email">Email:</InputLabel>
+          <InputLabel htmlFor="email">Email:</InputLabel>
           <InputField
             id="email"
             name="email"
-            type="email"
+            type="text"
             value={this.state.email}
             placeholder="Enter email"
             onChange={this.handleEmailChange}
             required
-            isValid={inputIsValid.email ? "#B0BD27" : "#d9d9d9"}
+            isValid={inputIsValid.email ? "#B0BD27" : "#D5D6D9"}
           />
         </Input>
         <Input>
-          <InputLabel for="companyName">
-            Company name (minimum 2 characters):
-          </InputLabel>
+          <InputLabel htmlFor="companyName">Company name:</InputLabel>
           <InputField
             id="companyName"
             name="companyName"
             type="text"
             value={this.state.companyName}
-            placeholder="Enter company name"
+            placeholder="Enter company name (min 2 characters)"
             onChange={this.handleNameChange}
             required
             isValid={inputIsValid.companyName ? "#B0BD27" : "#D5D6D9"}
           />
         </Input>
         <Input>
-          <InputLabel for="password">
-            Password (minimum 6 characters):
-          </InputLabel>
+          <InputLabel htmlFor="password">Password:</InputLabel>
           <InputField
             id="password"
             name="password"
             type="password"
             value={this.state.password}
-            placeholder="Create password"
+            placeholder="Create password (min. 6 characters)"
             onChange={this.handlePasswordChange}
             required
             isValid={inputIsValid.password ? "#B0BD27" : "#D5D6D9"}
           />
         </Input>
         <Input>
-          <InputLabel for="re-enter-password">Repeat password:</InputLabel>
+          <InputLabel htmlFor="re-enter-password">Repeat password:</InputLabel>
           <InputField
             id="re-enter-password"
             name="repeatPassword"

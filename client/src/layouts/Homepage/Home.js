@@ -6,7 +6,7 @@ import Logo from "./assets/logo.svg";
 import UserForm from "../../components/UserForm/UserForm";
 import LandingPage from "../LandingPage/LandingPage";
 //Styles
-import { HomePage, SiteLogo, ActionLink } from "./styles";
+import { HomePage, ActionLink } from "./styles";
 
 import styled from "styled-components";
 

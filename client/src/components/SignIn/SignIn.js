@@ -13,11 +13,11 @@ import {
 const SignIn = () => (
   <ComponentContainer method="POST" action="/users/accounts/login">
     <Input>
-      <InputLabel for="email">Email:</InputLabel>
+      <InputLabel htmlFor="email">Email:</InputLabel>
       <InputField type="text" id="email" placeholder="Your email" />
     </Input>
     <Input>
-      <InputLabel for="password">Password:</InputLabel>
+      <InputLabel htmlFor="password">Password:</InputLabel>
       <InputField type="text" id="password" placeholder="Your password" />
     </Input>
     <ActionButton>Sign In</ActionButton>

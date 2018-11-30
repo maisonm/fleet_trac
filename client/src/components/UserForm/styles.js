@@ -31,6 +31,8 @@ export const PanelGreeting = styled.div`
   background-image: linear-gradient(to top, #4ecdc4 0%, #637283 100%);
   color: #fafafa;
   border-radius: 3px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
   animation: 0.6s ease-in ${Bounce};
 
   && span {
@@ -58,6 +60,8 @@ export const PanelGreetingAlt = styled.div`
   background-image: linear-gradient(to top, #24c6dc 0%, #514a9d 100%);
   color: #fafafa;
   border-radius: 3px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
   transition: 0.3s;
   animation: 0.6s ease-in ${Bounce};
 
