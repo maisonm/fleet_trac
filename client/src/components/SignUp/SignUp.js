@@ -44,26 +44,6 @@ class SignUp extends Component {
     this.setState({ [name]: value });
   };
 
-  handleEmailChange = evt => {
-    this.setState({ email: evt.target.value });
-  };
-
-  handleNameChange = evt => {
-    this.setState({ companyName: evt.target.value });
-  };
-
-  handlePasswordChange = evt => {
-    this.setState({ password: evt.target.value });
-  };
-
-  handleRepeatPasswordChange = evt => {
-    this.setState({ repeatPassword: evt.target.value });
-  };
-
-  closeWarningPopup = () => {
-    this.setState({ invalidInputWarning: false });
-  };
-
   // Add pop up error when trying to submit form with invalid fields
   handleSubmit = evt => {
     evt.preventDefault();
