@@ -15,6 +15,7 @@ import InputWarning from "../InputWarning/InputWarning";
 
 const emailValidator = require("email-validator");
 
+//Validates the Sign Up inputs (Note: inputs sanitized by default in React)
 const validateInput = (email, companyName, password, repeatPassword) => {
   return {
     email: emailValidator.validate(`${email}`),
@@ -33,10 +34,15 @@ class SignUp extends Component {
       companyName: "",
       password: "",
       repeatPassword: "",
-      invalidSubmitPopupOpen: false,
+      invalidInputWarning: false,
       serverError: {}
     };
   }
+
+  handleInputChange = evt => {
+    const { name, value } = evt.target;
+    this.setState({ [name]: value });
+  };
 
   handleEmailChange = evt => {
     this.setState({ email: evt.target.value });
@@ -55,19 +61,13 @@ class SignUp extends Component {
   };
 
   closeWarningPopup = () => {
-    this.setState({ invalidSubmitPopupOpen: false });
+    this.setState({ invalidInputWarning: false });
   };
 
   // Add pop up error when trying to submit form with invalid fields
   handleSubmit = evt => {
     evt.preventDefault();
     const { email, companyName, password, repeatPassword } = this.state;
-
-    let userData = {
-      companyName: companyName,
-      password: password,
-      email: email
-    };
 
     //Validate input values
     const isValid = validateInput(email, companyName, password, repeatPassword);
@@ -79,16 +79,23 @@ class SignUp extends Component {
       !isValid.password ||
       !isValid.repeatPassword
     ) {
-      let invalidInputWarning = {
+      const inputWarning = {
         message:
           "One or more fields are not valid. Complete the form to continue."
       };
+
       this.setState({
-        invalidSubmitPopupOpen: true,
-        serverError: invalidInputWarning
+        invalidInputWarning: true,
+        serverError: inputWarning
       });
       return;
     } else {
+      let userData = {
+        companyName: companyName,
+        password: password,
+        email: email
+      };
+
       fetch("http://localhost:3000/users/accounts/", {
         method: "post",
         headers: {
@@ -99,17 +106,24 @@ class SignUp extends Component {
       })
         .then(response => response.json())
         .then(response => {
-          const { status, message } = response;
+          const { status, message, user, userToken } = response;
 
           if (status === 201) {
-            return this.props.history.push("/dashboard");
+            //Handles storing JWT token returned from the server into sessionStorage
+            const storeItems = itemObj => {
+              sessionStorage.setItem("user", JSON.stringify(itemObj));
+            };
+            let itemObj = { userId: user._id, userToken: userToken };
+            storeItems(itemObj);
+            // return this.props.history.push("/dashboard");
+            console.log(response);
           } else {
             let errorMessage = {
               status,
               message
             };
             this.setState({
-              invalidSubmitPopupOpen: true,
+              invalidInputWarning: true,
               serverError: errorMessage
             });
           }
@@ -132,14 +146,14 @@ class SignUp extends Component {
       password,
       repeatPassword
     );
-    //Input warnings object passed as props to InputWarning functional component
+    //Input warnings object passed via props to the InputWarning component
     let warningProps = {
       closePopup: this.closeWarningPopup,
       serverError: serverError
     };
     return (
       <ComponentContainer onSubmit={this.handleSubmit}>
-        {this.state.invalidSubmitPopupOpen ? (
+        {this.state.invalidInputWarning ? (
           <InputWarning {...warningProps} />
         ) : null}
         <Input>
@@ -150,7 +164,7 @@ class SignUp extends Component {
             type="text"
             value={email}
             placeholder="Enter email"
-            onChange={this.handleEmailChange}
+            onChange={this.handleInputChange}
             required
             isValid={inputIsValid.email ? "#B0BD27" : "#D5D6D9"}
           />
@@ -163,7 +177,7 @@ class SignUp extends Component {
             type="text"
             value={companyName}
             placeholder="Enter company name (min 2 characters)"
-            onChange={this.handleNameChange}
+            onChange={this.handleInputChange}
             required
             isValid={inputIsValid.companyName ? "#B0BD27" : "#D5D6D9"}
           />
@@ -176,7 +190,7 @@ class SignUp extends Component {
             type="password"
             value={password}
             placeholder="Create password (min. 6 characters)"
-            onChange={this.handlePasswordChange}
+            onChange={this.handleInputChange}
             required
             isValid={inputIsValid.password ? "#B0BD27" : "#D5D6D9"}
           />
@@ -189,7 +203,7 @@ class SignUp extends Component {
             type="password"
             value={repeatPassword}
             placeholder="Re-enter password"
-            onChange={this.handleRepeatPasswordChange}
+            onChange={this.handleInputChange}
             required
             isValid={inputIsValid.repeatPassword ? "#B0BD27" : "#D5D6D9"}
           />
