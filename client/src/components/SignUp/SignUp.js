@@ -79,7 +79,14 @@ class SignUp extends Component {
       !isValid.password ||
       !isValid.repeatPassword
     ) {
-      this.setState({ invalidSubmitPopupOpen: true });
+      let invalidInputWarning = {
+        message:
+          "One or more fields are not valid. Complete the form to continue."
+      };
+      this.setState({
+        invalidSubmitPopupOpen: true,
+        serverError: invalidInputWarning
+      });
       return;
     } else {
       fetch("http://localhost:3000/users/accounts/", {
@@ -95,42 +102,53 @@ class SignUp extends Component {
           const { status, message } = response;
 
           if (status === 201) {
-            this.props.history.push("/dashboard");
+            return this.props.history.push("/dashboard");
           } else {
             let errorMessage = {
               status,
               message
             };
-
-            this.setState({ serverErrorWarning: errorMessage });
+            this.setState({
+              invalidSubmitPopupOpen: true,
+              serverError: errorMessage
+            });
           }
         });
     }
   };
 
   render() {
-    const { email, companyName, password, repeatPassword } = this.state;
-    //Validate input fields everytime state updates
+    const {
+      email,
+      companyName,
+      password,
+      repeatPassword,
+      serverError
+    } = this.state;
+    //Validate input fields
     const inputIsValid = validateInput(
       email,
       companyName,
       password,
       repeatPassword
     );
-    let props = {
+    //Input warnings object passed as props to InputWarning functional component
+    let warningProps = {
       closePopup: this.closeWarningPopup,
-      serverError: this.state.serverError
+      serverError: serverError
     };
     return (
       <ComponentContainer onSubmit={this.handleSubmit}>
-        {this.state.invalidSubmitPopupOpen ? <InputWarning {...props} /> : null}
+        {this.state.invalidSubmitPopupOpen ? (
+          <InputWarning {...warningProps} />
+        ) : null}
         <Input>
           <InputLabel htmlFor="email">Email:</InputLabel>
           <InputField
             id="email"
             name="email"
             type="text"
-            value={this.state.email}
+            value={email}
             placeholder="Enter email"
             onChange={this.handleEmailChange}
             required
@@ -143,7 +161,7 @@ class SignUp extends Component {
             id="companyName"
             name="companyName"
             type="text"
-            value={this.state.companyName}
+            value={companyName}
             placeholder="Enter company name (min 2 characters)"
             onChange={this.handleNameChange}
             required
@@ -156,7 +174,7 @@ class SignUp extends Component {
             id="password"
             name="password"
             type="password"
-            value={this.state.password}
+            value={password}
             placeholder="Create password (min. 6 characters)"
             onChange={this.handlePasswordChange}
             required
@@ -169,7 +187,7 @@ class SignUp extends Component {
             id="re-enter-password"
             name="repeatPassword"
             type="password"
-            value={this.state.repeatPassword}
+            value={repeatPassword}
             placeholder="Re-enter password"
             onChange={this.handleRepeatPasswordChange}
             required
