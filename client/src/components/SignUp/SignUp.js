@@ -111,6 +111,7 @@ class SignUp extends Component {
           if (status === 201) {
             //Handles storing JWT token returned from the server into sessionStorage
             const storeItems = itemObj => {
+              sessionStorage.clear();
               sessionStorage.setItem("user", JSON.stringify(itemObj));
             };
             let itemObj = { userId: user._id, userToken: userToken };
