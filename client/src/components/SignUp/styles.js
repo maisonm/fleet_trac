@@ -47,12 +47,12 @@ export const ActionButton = styled.button`
   font-size: 0.9em;
   color: #ffffff;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.4s;
   font-weight: bold;
 
   &&:hover {
     background-color: #6a63b6;
-    transition: 0.2s;
+    transition: 0.4s;
   }
 `;
 

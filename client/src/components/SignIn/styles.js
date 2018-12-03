@@ -18,17 +18,24 @@ export const InputField = styled.input`
   width: 100%;
   height: 40px;
   border-radius: 3px;
-  border: solid 1px #c0c0c0;
+  border: solid 1.5px ${props => props.isValid};
   padding-left: 10px;
   color: #595959;
   box-sizing: border-box;
+  outline: none;
+  transition: 0.5s;
+
+  ::placeholder {
+    font-style: italic;
+    color: #797979;
+    font-size: 0.82em;
+  }
 `;
 export const InputLabel = styled.label`
-  font-size: 0.7em;
-  font-weight: 600;
+  font-size: 0.75em;
   color: #595959;
-  margin-bottom: 4px;
-  letter-spacing: 0.1px;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
 `;
 
 export const Input = styled.div`
@@ -48,12 +55,12 @@ export const ActionButton = styled.button`
   font-size: 0.9em;
   color: #ffffff;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.4s;
   font-weight: bold;
 
   &&:hover {
     background-color: #637283;
-    transition: 0.2s;
+    transition: 0.4s;
   }
 `;
 

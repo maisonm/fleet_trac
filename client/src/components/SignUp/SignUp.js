@@ -15,7 +15,7 @@ import InputWarning from "../InputWarning/InputWarning";
 
 const emailValidator = require("email-validator");
 
-//Validates the Sign Up inputs (Note: inputs sanitized by default in React)
+//Validates the Sign In/Up user inputs (Note: inputs sanitized by default in React)
 const validateInput = (email, companyName, password, repeatPassword) => {
   return {
     email: emailValidator.validate(`${email}`),
@@ -39,12 +39,14 @@ class SignUp extends Component {
     };
   }
 
+  closeWarningPopup = () => {
+    this.setState({ invalidInputWarning: false });
+  };
   handleInputChange = evt => {
     const { name, value } = evt.target;
     this.setState({ [name]: value });
   };
 
-  // Add pop up error when trying to submit form with invalid fields
   handleSubmit = evt => {
     evt.preventDefault();
     const { email, companyName, password, repeatPassword } = this.state;
@@ -76,7 +78,7 @@ class SignUp extends Component {
         email: email
       };
 
-      fetch("http://localhost:3000/users/accounts/", {
+      fetch("/users/accounts/", {
         method: "post",
         headers: {
           Accept: "application/json",
@@ -87,6 +89,7 @@ class SignUp extends Component {
         .then(response => response.json())
         .then(response => {
           const { status, message, user, userToken } = response;
+          console.log(user);
 
           if (status === 201) {
             //Handles storing JWT token returned from the server into sessionStorage
@@ -96,6 +99,7 @@ class SignUp extends Component {
             };
             let itemObj = { userId: user._id, userToken: userToken };
             storeItems(itemObj);
+            // put this to use when the dashboard component is done
             // return this.props.history.push("/dashboard");
             console.log(response);
           } else {
@@ -118,25 +122,24 @@ class SignUp extends Component {
       companyName,
       password,
       repeatPassword,
-      serverError
+      serverError,
+      invalidInputWarning
     } = this.state;
-    //Validate input fields
+    //Validate input fields as they are typed
     const inputIsValid = validateInput(
       email,
       companyName,
       password,
       repeatPassword
     );
-    //Input warnings object passed via props to the InputWarning component
+    //Passes input warnings object and close fuction via props to the InputWarning component
     let warningProps = {
       closePopup: this.closeWarningPopup,
       serverError: serverError
     };
     return (
       <ComponentContainer onSubmit={this.handleSubmit}>
-        {this.state.invalidInputWarning ? (
-          <InputWarning {...warningProps} />
-        ) : null}
+        {invalidInputWarning ? <InputWarning {...warningProps} /> : null}
         <Input>
           <InputLabel htmlFor="email">Email:</InputLabel>
           <InputField
