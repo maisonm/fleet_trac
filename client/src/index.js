@@ -6,11 +6,13 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import Home from "./layouts/Homepage/Home";
+import Dashboard from "./layouts/Dashboard/Dashboard";
 
 ReactDOM.render(
   <Router>
     <App>
       <Route exact path="/" component={Home} />
+      <Route exact path="/dashboard" component={Dashboard} />
     </App>
   </Router>,
 
