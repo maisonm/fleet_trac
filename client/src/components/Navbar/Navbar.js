@@ -10,6 +10,7 @@ import OpenArrow from "./assets/open_arrow.svg";
 
 //Components
 import NavbarNotifictions from "../Notifications/NavbarNotifications/NavbarNotifications";
+import DateTime from "./DateTime/DateTime";
 
 const shake = keyframes`${headShake}`;
 
@@ -48,13 +49,9 @@ const UserName = styled.div`
   font-weight: 500;
   margin-right: 12px;
   color: #595959;
-  border: solid;
+  width: 150px;
   overflow: hidden;
-`;
-
-//Possibly remove
-const UserAvatar = styled.img`
-  width: 14px;
+  white-space: nowrap;
 `;
 
 const OpenUserSettings = styled.div`
@@ -92,11 +89,12 @@ const Notifications = styled.div`
 const Navbar = props => (
   <NavbarContainer>
     <Logo />
+    <DateTime />
     <Notifications>
       <NavbarNotifictions />
     </Notifications>
     <UserDropdown>
-      <UserName> Express Maintenance </UserName>
+      <UserName> Express Maintenance</UserName>
       <OpenUserSettings>
         {/* Add a user settings panel component here that is toggles on and off by clicking the open arrow */}
         <img src={OpenArrow} alt="menu drop down arrow" />
