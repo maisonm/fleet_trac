@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const UserNavDropdown = styled.div`
   width: 240px;
   height: 60px;
-  border-left: solid 1.5px #e2e4e9;
+  border-left: solid 1px #e2e4e9;
   position: absolute;
   right: 0;
   display: flex;

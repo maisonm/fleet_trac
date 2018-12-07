@@ -4,7 +4,7 @@ export const DateTimeDisplay = styled.div`
   width: 180px;
   height: 60px;
   box-sizing: border-box;
-  border-left: solid 1.5px #e2e4e9;
+  border-left: solid 1px #e2e4e9;
   position: absolute;
   right: 300px;
   display: flex;
@@ -43,4 +43,5 @@ export const Time = styled.div`
   font-size: 0.7em;
   font-weight: 500;
   margin-left: 5px;
+  color: #595959;
 `;

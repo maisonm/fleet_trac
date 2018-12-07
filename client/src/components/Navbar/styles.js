@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const borderStyle = "solid 1.5px #e2e4e9";
+const borderStyle = "solid 1px #e2e4e9";
 
 export const NavbarContainer = styled.div`
   border-bottom: ${borderStyle};
@@ -8,6 +8,7 @@ export const NavbarContainer = styled.div`
   height: 60px;
   box-sizing: border-box;
   position: relative;
+  background: #ffffff;
 `;
 
 export const Logo = styled.div`

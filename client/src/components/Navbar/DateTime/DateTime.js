@@ -22,7 +22,7 @@ export default class DateTime extends Component {
     //Sets current time in state every minute
     setInterval(() => {
       let now = new Date();
-      this.setState({ currentTime: date.format(now, "hh:mm") });
+      this.setState({ currentTime: date.format(now, "hh:mm A") });
     }, 60000);
   }
   render() {
