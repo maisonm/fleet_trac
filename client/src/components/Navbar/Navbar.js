@@ -42,11 +42,14 @@ const UserDropdown = styled.div`
   align-items: center;
 `;
 
+//ADDED OVERFLOW HIDDEN, NOT TESTED!!!
 const UserName = styled.div`
   font-size: 0.78em;
   font-weight: 500;
   margin-right: 12px;
   color: #595959;
+  border: solid;
+  overflow: hidden;
 `;
 
 //Possibly remove
