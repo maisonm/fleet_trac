@@ -4,14 +4,15 @@ import React, { Component } from "react";
 import { DateTimeDisplay, DateCube, Time } from "./styles";
 
 let date = require("date-and-time");
-let now = new Date();
 
 export default class DateTime extends Component {
   constructor(props) {
     super(props);
 
+    let now = new Date();
+
     this.state = {
-      currentTime: date.format(now, "hh:mm"),
+      currentTime: date.format(now, "hh:mm A"),
       currentDay: date.format(now, "DD"),
       currentMonth: date.format(now, "MMM")
     };
@@ -20,6 +21,7 @@ export default class DateTime extends Component {
   componentDidMount() {
     //Sets current time in state every minute
     setInterval(() => {
+      let now = new Date();
       this.setState({ currentTime: date.format(now, "hh:mm") });
     }, 60000);
   }
