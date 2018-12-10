@@ -17,6 +17,20 @@ export const Logo = styled.div`
   border-right: ${borderStyle};
   position: absolute;
   left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > a img {
+    width: 28px;
+    transition: 1s;
+
+    &:hover {
+      transform: rotate(360deg);
+      transition: 1s;
+      cursor: pointer;
+    }
+  }
 `;
 
 export const Notifications = styled.div`

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const UserNavDropdown = styled.div`
   width: 240px;
@@ -26,6 +26,7 @@ export const OpenUserSettings = styled.div`
   width: 20px;
   height: 20px;
   transition: 0.3s;
+  transform: rotate(${props => props.rotate});
   margin-top: 2px;
   box-sizing: border-box;
   display: flex;
@@ -34,10 +35,5 @@ export const OpenUserSettings = styled.div`
 
   & > img {
     width: 5px;
-  }
-
-  &:hover {
-    transform: rotate(90deg);
-    transition: 0.3s;
   }
 `;

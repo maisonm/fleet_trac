@@ -19,11 +19,12 @@ export default class DateTime extends Component {
   }
 
   componentDidMount() {
-    //Sets current time in state every minute
+    //Sets current time in state every 10secs
     setInterval(() => {
+      //Must get new date every update
       let now = new Date();
       this.setState({ currentTime: date.format(now, "hh:mm A") });
-    }, 60000);
+    }, 10000);
   }
   render() {
     const { currentTime, currentMonth, currentDay } = this.state;
