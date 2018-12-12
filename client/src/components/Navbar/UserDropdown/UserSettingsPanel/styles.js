@@ -1,26 +1,33 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { fadeIn, fadeOut } from "react-animations";
 
 const fade_in = keyframes`${fadeIn}`;
 const fade_out = keyframes`${fadeOut}`;
 
 export const SettingsPanel = styled.div`
-  height: 120px;
-  min-width: 220px;
-  border-radius: 3px;
-  background: #fff;
-  position: fixed;
-  top: 65px;
-  right: 40px;
-  box-shadow: 0 0 6px #bfbfbf;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  animation: ${props => (props.isOpen ? fade_in : fade_out)} 0.8s ease forwards;
-  & > img {
-    width: 28px;
-  }
-`;
+         height: 120px;
+         min-width: 220px;
+         border-radius: 3px;
+         background: #fff;
+         position: fixed;
+         top: 65px;
+         right: 40px;
+         box-shadow: 0 0 6px #bfbfbf;
+         display: flex;
+         flex-direction: column;
+         justify-content: space-around;
+         animation: ${props => (props.isOpen ? fade_in : fade_out)} 0.6s ease forwards;
+         & > img {
+           width: 28px;
+         }
+
+         &.settings-panel-appear-active {
+           display: none;
+         }
+
+         &.settings-panel-enter-done {
+           display: none;
+         }`;
 
 export const WelcomeUser = styled.div`
   width: 100%;

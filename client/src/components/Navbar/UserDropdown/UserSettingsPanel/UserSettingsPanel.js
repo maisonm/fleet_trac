@@ -1,8 +1,8 @@
 import React from "react";
+import { CSSTransition } from "react-transition-group";
 
 import {
   SettingsPanel,
-  SettingsPanelClose,
   WelcomeUser,
   LinkContainer
 } from "./styles";
@@ -15,6 +15,12 @@ import SettingsIcon from "./assets/settings.svg";
 //ADD LINKS WHEN THE SETTINGS PAGE IS READY
 //DISGUSTING WAY TO FADE IN AND OUT  ¯\_(ツ)_/¯ (Address later)
 const UserSettingsPanel = props => (
+  <CSSTransition
+    in={true}
+    appear={true}
+    timeout={1000}
+    classNames="settings-panel"
+  >
   <SettingsPanel isOpen={props.panelOpen}>
     <WelcomeUser>
       <img src={SignedInIcon} alt="user signed in icon" />
@@ -29,5 +35,7 @@ const UserSettingsPanel = props => (
       <p>Sign Out </p>
     </LinkContainer>
   </SettingsPanel>
+  </CSSTransition>
 );
 export default UserSettingsPanel;
+

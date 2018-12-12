@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 
 //Assets
 import OpenArrow from "./assets/open_arrow.svg";
@@ -28,7 +28,7 @@ export default class UserDropdown extends Component {
             in={true}
             appear={true}
             timeout={1000}
-            classNames="component"
+            classNames="open-arrow"
           >
             <OpenUserSettings
               rotate={arrowDown}
@@ -41,9 +41,8 @@ export default class UserDropdown extends Component {
             >
               <img src={OpenArrow} alt="menu drop down arrow" />
             </OpenUserSettings>
-
           </CSSTransition>
-        {/* <UserSettingsPanel panelOpen={settingsPanelOpen} /> */}
+        <UserSettingsPanel panelOpen={settingsPanelOpen} />
       </UserNavDropdown>
     );
   }

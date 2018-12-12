@@ -44,7 +44,7 @@ export const OpenUserSettings = styled.div`
          width: 20px;
          height: 20px;
          transition: 0.3s;
-         animation: ${props => (props.rotate ? rotate_down : rotate_up)} 0.5s ease forwards;
+         animation: ${props => (props.rotate ? rotate_down : rotate_up)} 0.3s ease forwards;
          margin-top: 2px;
          box-sizing: border-box;
          display: flex;
@@ -55,10 +55,12 @@ export const OpenUserSettings = styled.div`
            width: 5px;
          }
 
-         &.component-appear-active {
+         &.open-arrow-appear-active {
            animation: none;
          }
 
-         &.component-enter-done {
+         &.open-arrow-enter-done {
            animation: none;
-         }`;
+         }
+         
+         `;
