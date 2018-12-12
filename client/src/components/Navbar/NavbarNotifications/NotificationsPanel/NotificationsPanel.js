@@ -1,5 +1,12 @@
 import React from 'react'
-import styled from 'styled-components';
+import { CSSTransition } from 'react-transition-group';
+
+import styled, { keyframes } from 'styled-components';
+
+import { fadeIn, fadeOut } from "react-animations";
+
+const fade_in = keyframes`${fadeIn}`;
+const fade_out = keyframes`${fadeOut}`;
 
 const Panel = styled.div`
   width: 238px;
@@ -10,6 +17,15 @@ const Panel = styled.div`
   right: 420px;
   border-radius: 3px;
   box-shadow: 2px 2px 2px #cbd0ea;
+  animation: ${props => (props.isOpen ? fade_in : fade_out)} 0.6s ease forwards;
+
+  &.notifications-panel-appear-active {
+    display: none;
+  }
+
+  &.notifications-panel-enter-done {
+    display: none;
+  }
 `;
 
 const PanelHeader = styled.div`
@@ -75,34 +91,47 @@ const NotificationDetails = styled.div`
 `;
 
 const NotificationsPanel = props => (
-  <Panel>
-    <PanelHeader> Notifications </PanelHeader>
-    <PanelBanner> Today </PanelBanner>
-    <NotificationCard> 
+  <CSSTransition
+    in={true}
+    appear={true}
+    timeout={1000}
+    classNames="notifications-panel"
+  >
+    <Panel isOpen={props.panelOpen}>
+      <PanelHeader> Notifications </PanelHeader>
+      <PanelBanner> Today </PanelBanner>
+      <NotificationCard>
         <NotifictionTitle>
-            <p>Service Upcoming • <span>Forward Air</span></p>
+          <p>
+            Service Upcoming • <span>Forward Air</span>
+          </p>
         </NotifictionTitle>
         <NotificationDetails>
-            DOT service is upcoming on unit #619822 in 5 days.
+          DOT service is upcoming on unit #619822 in 5 days.
         </NotificationDetails>
-    </NotificationCard>
-    <NotificationCard>
+      </NotificationCard>
+      <NotificationCard>
         <NotifictionTitle>
-            <p>Service Due • <span>Forward Air</span></p>
+          <p>
+            Service Due • <span>Forward Air</span>
+          </p>
         </NotifictionTitle>
         <NotificationDetails>
-            DOT service is DUE on unit #813322. It is 1 day(s) past due.
+          DOT service is DUE on unit #813322. It is 1 day(s) past due.
         </NotificationDetails>
-    </NotificationCard> 
-    <NotificationCard>
-    <NotifictionTitle>
-        <p>Service Upcoming • <span>Structall</span></p>
-    </NotifictionTitle>
-    <NotificationDetails>
-        DOT service is upcoming on unit 65 in 2 days.
+      </NotificationCard>
+      <NotificationCard>
+        <NotifictionTitle>
+          <p>
+            Service Upcoming • <span>Structall</span>
+          </p>
+        </NotifictionTitle>
+        <NotificationDetails>
+          DOT service is upcoming on unit 65 in 2 days.
         </NotificationDetails>
-    </NotificationCard >
-  </Panel>
+      </NotificationCard>
+    </Panel>
+  </CSSTransition>
 );
 
   export default NotificationsPanel;

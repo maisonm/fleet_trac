@@ -39,14 +39,30 @@ const NotificationAlertBubble = styled.div`
 `;
 
 export default class NavbarNotifications extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      notificationsPanelOpen: false,
+    };
+  }
+  
   render() {
+    const { notificationsPanelOpen } = this.state;
     return (
-      <NotificationsOpen>
-        {/* Notification bubble pops up when upcoming things are due */}
-        <NotificationAlertBubble />
-        <img src={BellIcon} alt="notifications icon" />
-        <NotificationsPanel />
-      </NotificationsOpen>
+      <div>
+        <NotificationsOpen
+          onClick={() => {
+            this.setState(prevState => ({
+              notificationsPanelOpen: !prevState.notificationsPanelOpen
+            }));
+          }}
+        >
+          <NotificationAlertBubble />
+          <img src={BellIcon} alt="notifications icon" />
+        </NotificationsOpen>
+      <NotificationsPanel panelOpen={notificationsPanelOpen} />
+    </div>
     );
   }
 }
