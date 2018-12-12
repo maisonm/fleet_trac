@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 //Assets
 import OpenArrow from "./assets/open_arrow.svg";
@@ -14,7 +15,7 @@ export default class UserDropdown extends Component {
     super(props);
 
     this.state = {
-      settingsPanelOpen: true,
+      settingsPanelOpen: false,
       arrowDown: false
     };
   }
@@ -23,11 +24,26 @@ export default class UserDropdown extends Component {
     return (
       <UserNavDropdown>
         <UserName> Express Maintenance</UserName>
-        <OpenUserSettings rotate={arrowDown ? "90deg" : "0deg"}>
-          {/* Add a user settings panel component here that is toggles on and off by clicking the open arrow */}
-          <img src={OpenArrow} alt="menu drop down arrow" />
-        </OpenUserSettings>
-        <UserSettingsPanel panelOpen={settingsPanelOpen} />
+          <CSSTransition
+            in={true}
+            appear={true}
+            timeout={1000}
+            classNames="component"
+          >
+            <OpenUserSettings
+              rotate={arrowDown}
+              onClick={() => {
+                this.setState(prevState => ({
+                  arrowDown: !prevState.arrowDown,
+                  settingsPanelOpen: !prevState.settingsPanelOpen
+                }));
+              }}
+            >
+              <img src={OpenArrow} alt="menu drop down arrow" />
+            </OpenUserSettings>
+
+          </CSSTransition>
+        {/* <UserSettingsPanel panelOpen={settingsPanelOpen} /> */}
       </UserNavDropdown>
     );
   }

@@ -16,27 +16,7 @@ export const SettingsPanel = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  animation: ${fade_in} 1s ease;
-
-  & > img {
-    width: 28px;
-  }
-`;
-
-export const SettingsPanelClose = styled.div`
-  height: 120px;
-  min-width: 220px;
-  border-radius: 3px;
-  background: #fff;
-  position: fixed;
-  top: 65px;
-  right: 40px;
-  box-shadow: 0 0 6px #bfbfbf;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  animation: ${fade_out} 1s ease forwards;
-
+  animation: ${props => (props.isOpen ? fade_in : fade_out)} 0.8s ease forwards;
   & > img {
     width: 28px;
   }
