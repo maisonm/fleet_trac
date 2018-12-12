@@ -5,14 +5,14 @@ const fade_in = keyframes`${fadeIn}`;
 const fade_out = keyframes`${fadeOut}`;
 
 export const SettingsPanel = styled.div`
-         height: 120px;
-         min-width: 220px;
+         height: 180px;
+         width: 240px;
          border-radius: 3px;
          background: #fff;
          position: fixed;
-         top: 65px;
-         right: 40px;
-         box-shadow: 0 0 6px #bfbfbf;
+         top: 60px;
+         right: 0px;
+         box-shadow: 2px 2px 2px #cbd0ea;
          display: flex;
          flex-direction: column;
          justify-content: space-around;

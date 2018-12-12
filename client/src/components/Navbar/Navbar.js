@@ -6,7 +6,7 @@ import { CSSTransition } from 'react-transition-group';
 import { NavbarContainer, Logo, Notifications } from "./styles";
 
 //Components
-import NavbarNotifictions from "../Notifications/NavbarNotifications/NavbarNotifications";
+import NavbarNotifictions from "./NavbarNotifications/NavbarNotifications";
 import DateTime from "./DateTime/DateTime";
 import UserDropdown from "./UserDropdown/UserDropdown";
 
@@ -27,10 +27,10 @@ const Navbar = props => (
         </CSSTransition>
       </Link>
     </Logo>
-    <DateTime />
     <Notifications>
       <NavbarNotifictions />
     </Notifications>
+    <DateTime />
     <UserDropdown />
   </NavbarContainer>
 );

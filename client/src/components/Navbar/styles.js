@@ -50,7 +50,7 @@ export const Notifications = styled.div`
   height: 60px;
   border-left: ${borderStyle};
   position: absolute;
-  right: 240px;
+  right: 420px;
   display: flex;
   justify-content: center;
   align-items: center;

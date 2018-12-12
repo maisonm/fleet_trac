@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import Logo from "./assets/logo.svg";
 //Components
 import UserForm from "../../components/UserForm/UserForm";
-import LandingPage from "../LandingPage/LandingPage";
+import LandingPage from "../Landingpage/LandingPage";
 //Styles
 import { HomePage, ActionLink } from "./styles";
 

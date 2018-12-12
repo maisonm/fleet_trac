@@ -4,6 +4,9 @@ import styled from "styled-components";
 //Assets
 import BellIcon from "./assets/notification.svg";
 
+//Components
+import NotificationsPanel from './NotificationsPanel/NotificationsPanel';
+
 const NotificationsOpen = styled.div`
   height: 60px;
   width: 60px;
@@ -42,6 +45,7 @@ export default class NavbarNotifications extends Component {
         {/* Notification bubble pops up when upcoming things are due */}
         <NotificationAlertBubble />
         <img src={BellIcon} alt="notifications icon" />
+        <NotificationsPanel />
       </NotificationsOpen>
     );
   }

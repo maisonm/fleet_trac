@@ -6,7 +6,7 @@ export const DateTimeDisplay = styled.div`
   box-sizing: border-box;
   border-left: solid 1px #e2e4e9;
   position: absolute;
-  right: 300px;
+  right: 240px;
   display: flex;
   justify-content: center;
   align-items: center;
