@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CSSTransition } from 'react-transition-group';
 
 //Styles
 import { NavbarContainer, Logo, Notifications } from "./styles";
@@ -16,7 +17,14 @@ const Navbar = props => (
   <NavbarContainer>
     <Logo>
       <Link to="/">
-        <img src={AltLogo} alt="alternate fleet trac logo" />{" "}
+        <CSSTransition
+          in={true}
+          appear={true}
+          timeout={500}
+          classNames="nav-logo"
+        >
+          <img src={AltLogo} alt="alternate fleet trac logo" />
+        </CSSTransition>
       </Link>
     </Logo>
     <DateTime />

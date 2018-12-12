@@ -12,26 +12,38 @@ export const NavbarContainer = styled.div`
 `;
 
 export const Logo = styled.div`
-  width: 60px;
-  height: 60px;
-  border-right: ${borderStyle};
-  position: absolute;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+         width: 60px;
+         height: 60px;
+         border-right: ${borderStyle};
+         position: absolute;
+         left: 0;
+         display: flex;
+         justify-content: center;
+         align-items: center;
 
-  & > a img {
-    width: 28px;
-    transition: 1s;
+         & > a img {
+           width: 28px;
+           transition: 1s;
 
-    &:hover {
-      transform: rotate(360deg);
-      transition: 1s;
-      cursor: pointer;
-    }
-  }
-`;
+           &.nav-logo-appear {
+             transform: scale(0.5);
+             transition: all ease 500ms;
+           }
+
+           &.nav-logo-appear-active {
+             transform: scale(1);
+             transition: all ease 500ms;
+           }
+
+           &.nav-logo-enter-done {
+             transform: rotate(180deg);
+           }
+           &:hover {
+             transform: rotate(360deg);
+             transition: all 1000ms ease;
+             cursor: pointer;
+           }
+         }`;
 
 export const Notifications = styled.div`
   width: 60px;
