@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 
+//Components
+import SideBarButtons from './SideBarButtons/SideBarButtons';
+
 const SideBarContainer = styled.div`
   min-height: 100vh;
   width: 61px;
@@ -11,13 +14,16 @@ const SideBarContainer = styled.div`
   top: 0;
   border-right: solid 1px #e2e4e9;
   background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 `;
 
 class SideBar extends Component {
   render() {
     return (
       <SideBarContainer>
-        
+        <SideBarButtons />
       </SideBarContainer>
     )
   }
