@@ -9,6 +9,7 @@ export const NavbarContainer = styled.div`
   box-sizing: border-box;
   position: relative;
   background: #ffffff;
+  z-index: 99;
 `;
 
 export const Logo = styled.div`

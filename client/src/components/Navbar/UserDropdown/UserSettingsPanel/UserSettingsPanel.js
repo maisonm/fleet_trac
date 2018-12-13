@@ -13,7 +13,6 @@ import SignOutIcon from "./assets/sign-out.svg";
 import SettingsIcon from "./assets/settings.svg";
 
 //ADD LINKS WHEN THE SETTINGS PAGE IS READY
-//DISGUSTING WAY TO FADE IN AND OUT  ¯\_(ツ)_/¯ (Address later)
 const UserSettingsPanel = props => (
   <CSSTransition
     in={true}

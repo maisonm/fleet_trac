@@ -5,4 +5,5 @@ export const DashboardContainer = styled.div`
          min-height: 100vh;
          box-sizing: border-box;
          background: #f4f7fc;
+         position: relative;
          `
