@@ -17,7 +17,9 @@ const SideBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  z-index: 89;
 `;
+
 
 class SideBar extends Component {
   render() {
