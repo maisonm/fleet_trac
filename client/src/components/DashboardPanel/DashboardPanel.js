@@ -6,6 +6,7 @@ import Triangle from './assets/open_arrow.svg';
 
 //Components
 import PanelViewButtons from './PanelViewButtons/PanelViewButtons';
+import UpcomingDots from './UpcomingDots/UpcomingDots';
 
 //Styled 
 import {
@@ -13,7 +14,6 @@ import {
   ButtonActivePointer,
   PanelSection,
   PanelHeader,
-  OverviewPanel,
 } from "./styles";
 
 //Overview Panel will be seperate component
@@ -33,8 +33,10 @@ export default class DashboardPanel extends Component {
               You are in the <span>Dashboard panel</span>
             </p>
           </PanelHeader>
-            <PanelViewButtons />
-          <OverviewPanel> </OverviewPanel>
+          <PanelViewButtons />
+
+          {/* Breakout into seperate component */}
+          <UpcomingDots />
         </PanelSection>
       </DashboardPanelContainer>;
   }

@@ -9,6 +9,7 @@ export const DashboardPanelContainer = styled.div`
   padding-left: 80px;
   padding-top: 20px;
   position: relative;
+  /* Add CSS Transition to fade in on mount */
 `;
 
 export const ButtonActivePointer = styled.img`
@@ -60,10 +61,3 @@ export const PanelHeader = styled.div`
              font-weight: 500;
            }
          }`;
-
-export const OverviewPanel = styled.div`
-         width: 100%;
-         height: 100%;
-         border: solid coral;
-         box-sizing: border-box;
-`

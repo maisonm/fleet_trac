@@ -1,12 +1,16 @@
 const mongoose = require('mongoose');
-const Customer = require('./Customer')
+const Customer = require('./Customer');
+
 
 const FleetSchema = new mongoose.Schema({
     belongsToCustomer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer',
     },
-
+    belongsToUser: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
     unitType: {
         type: String,
         default: 'N/A',

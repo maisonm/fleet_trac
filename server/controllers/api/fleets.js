@@ -9,10 +9,8 @@ exports.fleet_add = (req, res) => {
     const { unitType, unitNumber, vinNumber, year, make, model,
     dotDone, dotDue } = body;
 
-    console.log(body);
-
     Customer.findOne({ _id: custid }, (err, customer) => {
-        const { _id } = customer;
+        const { _id, belongsToUser } = customer;
 
         if (err) { 
             res.send({
@@ -21,8 +19,11 @@ exports.fleet_add = (req, res) => {
             });
         };
 
+        console.log(belongsToUser);
+
         const fleetEquipment = new Fleet({ 
             belongsToCustomer: _id,
+            belongsToUser: belongsToUser,
             unitType: unitType,
             unitNumber: unitNumber,
             vinNumber: vinNumber,
