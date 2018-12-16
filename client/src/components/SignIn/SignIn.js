@@ -84,6 +84,7 @@ class SignIn extends Component {
             };
             let itemObj = { userId: userObj._id, userToken: userToken };
             storeItems(itemObj);
+            return this.props.history.push("/dashboard");
           } else {
             let errorMessage = { status, message };
             this.setState({

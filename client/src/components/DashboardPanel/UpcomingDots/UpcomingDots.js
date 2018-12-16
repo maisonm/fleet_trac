@@ -17,10 +17,6 @@ export default class UpcomingDots extends Component {
   render() {
     return <DotContainer>
         <VehicleDisplayStrip />
-        <VehicleDisplayStrip />
-        <VehicleDisplayStrip />
-        <VehicleDisplayStrip />
-        <VehicleDisplayStrip />
       </DotContainer>;
   }
 }

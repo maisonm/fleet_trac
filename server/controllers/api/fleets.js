@@ -51,8 +51,8 @@ exports.fleet_add = (req, res) => {
     });
 };
 
-//Get all Customers belonging to a User
-exports.fleet_get = (req, res) => {
+//Get all Fleets belonging to a single Customer
+exports.fleet_get_all_customer = (req, res) => {
     const { params } = req;
     const { custid } = params;
 
@@ -60,9 +60,27 @@ exports.fleet_get = (req, res) => {
         if (err)
             res.send({
                 status: 404,
-                message: 'Fleet equipment not found!',
+                message: 'Fleet not found!',
             });
         else    
+            res.send({
+                status: 200,
+                fleets,
+            });
+    });
+};
+//Get all Fleets belonging to all of a single User's customers
+exports.fleet_get_all_user = (req, res) => {
+    const { params } = req;
+    const { userid } = params;
+
+    Fleet.find({ belongsToUser: userid }, (err, fleets) => {
+        if (err)
+            res.send({
+                status: 404,
+                message: 'Fleet not found!',
+            });
+        else
             res.send({
                 status: 200,
                 fleets,
