@@ -49,3 +49,4 @@ class VehicleDisplayStrip extends Component {
 export default  VehicleDisplayStrip;
 
 //MUST GET CUSTOMER NAME SOMEHOW!
+//In fetch response create logic that will only send fleet vehcles that have DOT due dates within < 7 days
