@@ -99,9 +99,7 @@ class SignUp extends Component {
             };
             let itemObj = { userId: user._id, userToken: userToken };
             storeItems(itemObj);
-            // put this to use when the dashboard component is done
-            // return this.props.history.push("/dashboard");
-            console.log(response);
+            return this.props.history.push("/dashboard");
           } else {
             let errorMessage = {
               status,

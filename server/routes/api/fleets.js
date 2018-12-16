@@ -4,8 +4,11 @@ const router = express.Router();
 const fleet_controller = require('../../controllers/api/fleets');
 
 //GET
-//Returns an array of fleets that belong to the customer id
-router.get('/:custid', fleet_controller.fleet_get);
+//Returns all fleets that belong to single customer
+router.get("/:custid/customer", fleet_controller.fleet_get_all_customer);
+//Returns all fleets that belong to all of a single User's customers
+router.get("/:userid/user", fleet_controller.fleet_get_all_user);
+
 
 //POST
 router.post('/:custid', fleet_controller.fleet_add);
