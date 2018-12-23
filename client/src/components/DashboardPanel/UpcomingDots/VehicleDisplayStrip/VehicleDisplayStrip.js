@@ -18,20 +18,23 @@ class VehicleDisplayStrip extends Component {
 
     componentDidMount() {
         //Local storage object saved as stringified JSON - must be parsed when retrieved
+        //If sessionStorage is empty, value is null
         const user = JSON.parse(sessionStorage.getItem('user'));
 
-        fetch(`fleets/${user.userId}/user`, {
-            method: "get",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-        })
-            .then(response => response.json())
-            .then(res => {
-                this.setState({ fleets: res.fleets });
-            })
-            .catch(err => console.log(err));
+        console.log(user);
+
+        // fetch(`fleets/${user}/user`, {
+        //     method: "get",
+        //     headers: {
+        //         Accept: "application/json",
+        //         "Content-Type": "application/json"
+        //     },
+        // })
+        //     .then(response => response.json())
+        //     .then(res => {
+        //         this.setState({ fleets: res.fleets });
+        //     })
+        //     .catch(err => console.log(err));
         
     }
     
