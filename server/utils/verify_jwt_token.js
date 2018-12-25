@@ -15,8 +15,8 @@ router.use(function verifyToken(req, res, next) {
       // Next middleware
       next();
     } else {
-      // Forbidden
-      res.status(403).send({
+      // If token does not auth, redirect to home
+      res.send({
         status: 403,
         message: "Authentication token failed to verify."
       });

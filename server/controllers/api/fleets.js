@@ -24,7 +24,7 @@ exports.fleet_add = (req, res) => {
     
             if (err) { 
                 res.send({
-                    status: 500,
+                    status: 404,
                     message: 'Can not find the customer with the provided customer id!'
                 });
             };
